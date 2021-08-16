@@ -1,9 +1,8 @@
 const { verifyToken } = require('../helpers/jwt');
-const { Anggota } = require('../../models')
+const { Admin } = require('../../models');
 
 const authentication = (req, res, next) => {
   const header = req.headers.authorization
-
   if (!header) {
     res.status(401).send({
       status: 'Failed',
@@ -14,23 +13,34 @@ const authentication = (req, res, next) => {
   try {
     const token = header.replace('Bearer ', '')
     const verified = verifyToken(token)
-    console.log(verified);
 
-    Anggota.findByPk(verified.id)
-      .authentication(data => {
-        if (data) {
-          req.userData = verified
-          next()
-        } else {
-          res.status(404).send({
-            status: 'Failed',
-            message: 'User not Found'
-          })
+    if (verified) {
+      Admin.findOne({
+        where: {
+          id: verified.id
         }
       })
-      .catch(error => {
-        console.log(error)
+        .then(data => {
+          if (data) {
+            req.userData = verified
+            next()
+          } else {
+            res.status(404).send({
+              status: 'Failed',
+              message: 'User not Found'
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    } else {
+      res.status(401).send({
+        status: 'Failed',
+        message: 'User Unauthorized'
       })
+    }
+
   } catch (error) {
     res.status(500).send({
       status: 'Failed',

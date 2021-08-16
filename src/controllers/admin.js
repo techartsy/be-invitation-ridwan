@@ -52,7 +52,6 @@ exports.adminReg = async (req, res) => {
 exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body
-
     Admin.findOne({ where: { username } })
       .then(admin => {
         if (!admin || comparePass(password, admin.password)) {

@@ -65,7 +65,7 @@ exports.regist = async (req, res) => {
     const { nomor } = req.body
     const scheme = joi.object({
       nama: joi.string().min(5).required(),
-      nomor: joi.string().min(6).required(), //<<===== ketentuan penulisan user untuk nomor anggota
+      nomor: joi.string().min(6).required(),
       telepon: joi.string().min(10).pattern(/^[0-9]+$/).required(),
       pax: joi.number().allow(null, ''),
       alamat: joi.string().required(),
@@ -119,7 +119,6 @@ exports.deleteAnggota = async (req, res) => {
         id
       }
     })
-
     if (!cekAnggota) {
       res.status(404).send({
         status: 'Failed',
