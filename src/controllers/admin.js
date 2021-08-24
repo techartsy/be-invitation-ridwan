@@ -49,13 +49,16 @@ exports.adminReg = async (req, res) => {
   }
 }
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     const { username, password } = req.body
     Admin.findOne({ where: { username } })
       .then(admin => {
-        if (!admin || comparePass(password, admin.password)) {
-          next({ name: 'INVALID USERNAME OR PASSWORD' })
+        if (!admin || !comparePass(password, admin.password)) {
+          res.status(400).send({
+            status: 'Failed',
+            message: 'Invalid Username or Password'
+          })
         } else {
           const access_token = generateToken(admin)
           res.status(200).json({ access_token })
