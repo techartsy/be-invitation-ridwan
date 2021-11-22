@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "digital_invitation",
+    "database": "digital_invitation-ridwan",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
