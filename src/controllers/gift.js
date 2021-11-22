@@ -107,20 +107,19 @@ exports.deleteGift = async (req, res) => {
           id,
         },
       });
+      res.status(200).send({
+        status: "Success",
+        message: "Gift Successfully Deleted",
+        data: {
+          id,
+        },
+      });
     } else {
       res.status(404).send({
         status: "Failed",
         message: "Gift not Found",
       });
     }
-
-    res.status(200).send({
-      status: "Success",
-      message: "Gift Successfully Deleted",
-      data: {
-        id,
-      },
-    });
   } catch (error) {
     res.status(500).send({
       status: "Failed",
