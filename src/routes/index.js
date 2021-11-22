@@ -6,6 +6,7 @@ const router = express.Router();
 const { gifts, addGift, deleteGift, gift } = require("../controllers/gift");
 const { guests, guest, regist, deleteGuest } = require("../controllers/guest");
 const { adminReg, login } = require("../controllers/admin");
+const authentication = require("../middlewares/auth");
 
 // gift
 router.get("/gift/", gifts);
