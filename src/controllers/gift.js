@@ -102,7 +102,7 @@ exports.deleteGift = async (req, res) => {
       },
     });
     if (!checkGift) {
-      res.staus(404).send({
+      res.status(404).send({
         status: "Failed",
         message: "Gift not Found",
       });
