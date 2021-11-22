@@ -101,18 +101,18 @@ exports.deleteGift = async (req, res) => {
         id,
       },
     });
-    if (!checkGift) {
+    if (checkGift) {
+      await Gift.destroy({
+        where: {
+          id,
+        },
+      });
+    } else {
       res.status(404).send({
         status: "Failed",
         message: "Gift not Found",
       });
     }
-
-    await Gift.destroy({
-      where: {
-        id,
-      },
-    });
 
     res.status(200).send({
       status: "Success",
