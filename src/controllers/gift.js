@@ -84,7 +84,6 @@ exports.addGift = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       status: "Failed",
       message: "Internal Server erorr",
