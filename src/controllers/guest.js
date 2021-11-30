@@ -81,13 +81,13 @@ exports.regist = async (req, res) => {
         message: error.details[0].message,
       });
     }
-    const cekGuest = await Guest.findOne({
+    const chekGuest = await Guest.findOne({
       where: {
         name,
       },
     });
 
-    if (cekGuest) {
+    if (chekGuest) {
       return res.status(400).json({
         status: "Failed",
         message: "Nama sudah Terdaftar",
@@ -113,31 +113,32 @@ exports.regist = async (req, res) => {
 exports.deleteGuest = async (req, res) => {
   try {
     const { id } = req.params;
-    const cekGuest = await Guest.findOne({
+    const chekGuest = await Guest.findOne({
       where: {
         id,
       },
     });
-    if (!cekGuest) {
+    if (!chekGuest) {
       res.status(404).send({
         status: "Failed",
         messages: "Guest not Found",
       });
+    } else {
+      await Guest.destroy({
+        where: {
+          id,
+        },
+      });
+
+      res.status(200).send({
+        status: "Success",
+        message: "Guest Successfully Deleted",
+        data: {
+          id,
+        },
+      });
     }
 
-    await Guest.destroy({
-      where: {
-        id,
-      },
-    });
-
-    res.status(200).send({
-      status: "Success",
-      message: "Guest Successfully Deleted",
-      data: {
-        id,
-      },
-    });
   } catch (error) {
     res.status(500).send({
       status: "Failed",
